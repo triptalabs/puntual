@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prompt Manager +</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined" rel="stylesheet"/>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="design-root">
+    <div class="flex-grow">
+      <header>
+        <div class="header-content">
+          <h1>Prompts</h1>
+          <div class="header-actions">
+            <button id="import-json" class="header-btn" title="Importar prompts desde JSON">
+              <span class="material-symbols-outlined">file_upload</span>
+            </button>
+            <button id="favorites-toggle" class="header-btn">
+              <span class="material-symbols-outlined">star</span>
+            </button>
+            <button id="export" class="header-btn">
+              <span class="material-symbols-outlined">file_download</span>
+            </button>
+            <button id="add-prompt" class="header-btn">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Formulario para nuevo prompt (oculto por defecto) -->
+      <div id="add-form" class="hidden form-container scroll-invisible">
+        <div class="form-card">
+          <h1 class="form-title">Nuevo Prompt</h1>
+          <form id="prompt-form">
+            <div class="form-group">
+              <label for="prompt-title" class="form-label">Título:</label>
+              <input type="text" id="prompt-title" class="form-input" placeholder="Ej: Saludo formal" autocomplete="off" spellcheck="false" required>
+            </div>
+            <div class="form-group">
+              <label for="prompt-code" class="form-label">Código:</label>
+              <input type="text" id="prompt-code" class="form-input" placeholder="Ej: saludo-formal" pattern="[a-z0-9][a-z0-9_-]{1,31}" autocomplete="off" spellcheck="false" required>
+              <small class="form-help">2-32 caracteres, solo letras, números, _ y -</small>
+            </div>
+            <div class="form-group">
+              <label for="prompt-text" class="form-label">Texto:</label>
+              <textarea id="prompt-text" class="form-textarea scroll-invisible" placeholder="Escribe aquí el contenido del prompt..." autocomplete="off" spellcheck="false" required></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="button" id="cancel-add" class="btn btn-secondary">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Vista de importación JSON (oculta por defecto) -->
+      <div id="import-view" class="hidden import-container scroll-invisible">
+        <h1 class="import-title">Importar Prompts</h1>
+
+        <div id="drop-zone" class="drop-zone">
+          <div class="drop-zone-content">
+            <span class="material-symbols-outlined drop-icon">cloud_upload</span>
+            <p class="drop-text">Arrastra tu archivo JSON aquí</p>
+            <p class="drop-subtext">o haz clic para seleccionar</p>
+          </div>
+          <input type="file" id="file-input" accept=".json" style="display: none;">
+        </div>
+
+        <div id="import-preview" class="import-preview hidden">
+          <h3>Vista previa de importación</h3>
+          <div id="preview-content"></div>
+          <div class="import-actions">
+            <button id="cancel-import" class="btn btn-secondary">Cancelar</button>
+            <button id="confirm-import" class="btn btn-primary">Importar</button>
+          </div>
+        </div>
+
+        <div class="import-actions">
+          <button id="back-to-list" class="btn btn-secondary">Volver a la lista</button>
+        </div>
+      </div>
+
+      <div class="search-container">
+        <div class="search-wrapper">
+          <span class="material-symbols-outlined search-icon">search</span>
+          <input id="search-input" class="search-input" placeholder="Buscar por título o código..." type="text" autocomplete="off" spellcheck="false"/>
+        </div>
+      </div>
+
+      <main id="list" class="prompts-list scroll-invisible">
+        <!-- Los prompts se cargarán aquí dinámicamente -->
+      </main>
+    </div>
+    
+    <footer>
+      <small class="footer-text">Tip: escribe <code class="footer-code">++codigo</code> y presiona espacio.</small>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
